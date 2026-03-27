@@ -83,20 +83,6 @@
             color: var(--color-charcoal);
         }
 
-        .input-premium {
-            width: 100%;
-            background-color: transparent;
-            border-bottom: 1px solid #ddd;
-            padding: 12px 0;
-            outline: none;
-            transition: border-color 0.3s ease;
-            font-size: 14px;
-        }
-
-        .input-premium:focus {
-            border-color: var(--color-accent);
-        }
-
         #logo-container svg {
             width: 180px;
             height: auto;
@@ -117,9 +103,15 @@
             opacity: 1;
         }
 
-        /* Animación suave para el cambio de contenido en el modal */
-        .auth-content {
-            transition: all 0.3s ease-in-out;
+        .input-premium {
+            background: transparent;
+            border-bottom: 1px solid #d1d5db;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-premium:focus {
+            outline: none;
+            border-color: var(--color-accent);
         }
     </style>
 </head>
@@ -158,47 +150,6 @@
         </div>
     </div>
 
-    <!-- Modal Cuenta / Login & Registro -->
-    <div id="account-modal" class="modal-overlay fixed inset-0 z-[100] items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-        <div class="bg-[#F9F7F2] w-full max-w-md p-8 md:p-12 relative shadow-2xl border border-gray-100 fade-in">
-            <button onclick="toggleModal('account-modal')" class="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors">
-                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            
-            <div class="auth-content">
-                <div class="text-center mb-10">
-                    <h2 class="text-3xl mb-2" id="auth-title">Mi Cuenta</h2>
-                    <p class="text-xs uppercase tracking-widest text-[#B5835A]" id="auth-subtitle">Ingresa a tu espacio creativo</p>
-                </div>
-
-                <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-6">
-                    <!-- Campo de nombre (solo visible en registro) -->
-                    <div id="reg-name-container" style="display: none;">
-                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Nombre Completo</label>
-                        <input type="text" id="reg-name" placeholder="Tu nombre" class="input-premium">
-                    </div>
-                    
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Correo Electrónico</label>
-                        <input type="email" id="auth-email" placeholder="ejemplo@lana-seda.com" class="input-premium" required>
-                    </div>
-                    <div>
-                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Contraseña</label>
-                        <input type="password" id="auth-pass" placeholder="••••••••" class="input-premium" required>
-                    </div>
-                    <div class="pt-4">
-                        <button type="submit" id="auth-submit-btn" class="btn-premium text-xs tracking-widest uppercase py-4">Iniciar Sesión</button>
-                    </div>
-                </form>
-
-                <div class="mt-8 text-center border-t border-gray-200 pt-6">
-                    <p class="text-xs text-gray-500 mb-2" id="auth-switch-text">¿No tienes cuenta aún?</p>
-                    <button onclick="switchAuthMode()" class="text-xs uppercase tracking-[0.2em] font-semibold text-[#B5835A] hover:text-black transition-colors" id="auth-switch-btn">Crear una cuenta</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Header / Navegación -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-header border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -229,7 +180,6 @@
             </div>
 
             <div class="flex items-center space-x-6 text-xs uppercase tracking-widest font-light">
-                <a onclick="toggleModal('account-modal')" class="nav-link">Cuenta</a>
                 <a href="#" class="relative">
                     <span class="sr-only">Carrito</span>
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
@@ -294,9 +244,39 @@
                 <p class="mt-8 text-[10px] uppercase tracking-[0.4em] text-[#B5835A] font-semibold">Inspiración Lana & Seda</p>
             </div>
         </section>
+
+        <!-- Sección de Suscripción -->
+        <section class="py-24 bg-[#F2EDE4] border-t border-gray-100">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <div class="mb-12">
+                    <h2 class="text-3xl md:text-4xl mb-4">Únete a nuestra Cofradía</h2>
+                    <p class="text-gray-600 font-light max-w-md mx-auto leading-relaxed">
+                        Suscríbete para recibir noticias sobre nuevas colecciones, tutoriales exclusivos y ofertas de preventa solo para miembros.
+                    </p>
+                </div>
+                
+                <form onsubmit="handleSubscribe(event)" class="max-w-md mx-auto">
+                    <div class="flex flex-col md:flex-row items-end gap-6">
+                        <div class="flex-grow w-full">
+                            <input 
+                                type="email" 
+                                id="subscriber-email"
+                                placeholder="Tu correo electrónico" 
+                                required
+                                class="w-full py-3 px-0 input-premium text-sm placeholder-gray-400"
+                            >
+                        </div>
+                        <button type="submit" class="btn-premium md:w-auto px-10 text-xs tracking-widest uppercase">
+                            Suscribirse
+                        </button>
+                    </div>
+                    <p id="subscribe-message" class="mt-4 text-[10px] uppercase tracking-widest text-[#B5835A] hidden">¡Bienvenido a Lana & Seda!</p>
+                </form>
+            </div>
+        </section>
     </main>
 
-    <footer class="bg-[#F9F7F2] py-16 border-t border-gray-100 mt-20">
+    <footer class="bg-[#F9F7F2] py-16 border-t border-gray-100 mt-0">
         <div class="max-w-7xl mx-auto px-6 text-center">
              <div class="serif text-2xl mb-4 font-bold tracking-tighter">LANA & SEDA</div>
              <p class="text-sm text-gray-400 font-light mb-8">Mercería de Alta Costura para artesanos contemporáneos.</p>
@@ -331,64 +311,35 @@
             }
         ];
 
-        let isLoginMode = true;
-
         function toggleModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal.classList.contains('active')) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                // Reset a modo login al cerrar para la próxima vez
-                if (modalId === 'account-modal') {
-                    isLoginMode = false;
-                    switchAuthMode();
-                }
             } else {
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
         }
 
-        function switchAuthMode() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('auth-title');
-            const subtitle = document.getElementById('auth-subtitle');
-            const submitBtn = document.getElementById('auth-submit-btn');
-            const switchText = document.getElementById('auth-switch-text');
-            const switchBtn = document.getElementById('auth-switch-btn');
-            const nameField = document.getElementById('reg-name-container');
-
-            if (isLoginMode) {
-                title.innerText = "Mi Cuenta";
-                subtitle.innerText = "Ingresa a tu espacio creativo";
-                submitBtn.innerText = "Iniciar Sesión";
-                switchText.innerText = "¿No tienes cuenta aún?";
-                switchBtn.innerText = "Crear una cuenta";
-                nameField.style.display = 'none';
-                document.getElementById('reg-name').required = false;
-            } else {
-                title.innerText = "Crear Cuenta";
-                subtitle.innerText = "Únete a nuestra comunidad de artesanos";
-                submitBtn.innerText = "Registrarse";
-                switchText.innerText = "¿Ya tienes una cuenta?";
-                switchBtn.innerText = "Inicia sesión aquí";
-                nameField.style.display = 'block';
-                document.getElementById('reg-name').required = true;
-            }
-        }
-
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('auth-email').value;
-            // Aquí iría la lógica de autenticación real
-            alert(isLoginMode ? `Iniciando sesión con: ${email}` : `Registrando cuenta para: ${email}`);
-            toggleModal('account-modal');
-        }
-
         window.onclick = function(event) {
             if (event.target.classList.contains('modal-overlay')) {
                 const modalId = event.target.id;
                 toggleModal(modalId);
+            }
+        }
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('subscriber-email');
+            const message = document.getElementById('subscribe-message');
+            
+            if (emailInput.value) {
+                message.classList.remove('hidden');
+                emailInput.value = '';
+                setTimeout(() => {
+                    message.classList.add('hidden');
+                }, 5000);
             }
         }
 
@@ -419,7 +370,7 @@
     </script>
 
     <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/03/26/00/20260326000209-MZDMHUOB.js" defer></script>
+    <script src="https://files.bpcontent.cloud/2026/03/26/00/20260326000209-MZDMHUOB.js" defer></script>
     
 </body>
 </html>
