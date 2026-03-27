@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lana & Seda | Insumos de Lujo para Tejido</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-cream: #F9F7F2;
+            --color-charcoal: #2C2C2C;
+            --color-accent: #B5835A;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-cream);
+            color: var(--color-charcoal);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-header {
+            background: rgba(249, 247, 242, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .btn-premium {
+            background-color: var(--color-charcoal);
+            color: white;
+            padding: 12px 32px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--color-charcoal);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-premium:hover {
+            background-color: transparent;
+            color: var(--color-charcoal);
+        }
+
+        .input-premium {
+            width: 100%;
+            background-color: transparent;
+            border-bottom: 1px solid #ddd;
+            padding: 12px 0;
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .input-premium:focus {
+            border-color: var(--color-accent);
+        }
+
+        #logo-container svg {
+            width: 180px;
+            height: auto;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(249, 247, 242, 0.8) 35%, rgba(249, 247, 242, 0) 100%);
+        }
+
+        /* Estilos para Modales */
+        .modal-overlay {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Animación suave para el cambio de contenido en el modal */
+        .auth-content {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Modal Sobre Nosotros -->
+    <div id="about-modal" class="modal-overlay fixed inset-0 z-[100] items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-[#F9F7F2] w-full max-w-2xl p-8 md:p-12 relative shadow-2xl border border-gray-100 fade-in">
+            <button onclick="toggleModal('about-modal')" class="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl mb-2">Sobre Lana & Seda</h2>
+                <div class="w-12 h-[1px] bg-[#B5835A] mx-auto"></div>
+            </div>
+
+            <div class="space-y-10">
+                <div>
+                    <h3 class="serif text-[#B5835A] uppercase tracking-widest text-sm mb-3">Nuestra Misión</h3>
+                    <p class="text-gray-600 leading-relaxed font-light">
+                        Proveer a los artistas del tejido con los materiales más finos y exclusivos, fomentando una cultura de paciencia, detalle y excelencia. Elevamos el arte del tejido transformando cada ovillo en el inicio de una pieza perdurable.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="serif text-[#B5835A] uppercase tracking-widest text-sm mb-3">Nuestra Visión</h3>
+                    <p class="text-gray-600 leading-relaxed font-light">
+                        Ser la mercería boutique de referencia global, reconocida por curar colecciones que definen el lujo contemporáneo. Aspiramos a conectar generaciones a través de la belleza táctil y la tradición.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <button onclick="toggleModal('about-modal')" class="btn-premium max-w-xs text-xs tracking-widest uppercase py-3">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cuenta / Login & Registro -->
+    <div id="account-modal" class="modal-overlay fixed inset-0 z-[100] items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-[#F9F7F2] w-full max-w-md p-8 md:p-12 relative shadow-2xl border border-gray-100 fade-in">
+            <button onclick="toggleModal('account-modal')" class="absolute top-6 right-6 text-gray-400 hover:text-black transition-colors">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="auth-content">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl mb-2" id="auth-title">Mi Cuenta</h2>
+                    <p class="text-xs uppercase tracking-widest text-[#B5835A]" id="auth-subtitle">Ingresa a tu espacio creativo</p>
+                </div>
+
+                <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-6">
+                    <!-- Campo de nombre (solo visible en registro) -->
+                    <div id="reg-name-container" style="display: none;">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Nombre Completo</label>
+                        <input type="text" id="reg-name" placeholder="Tu nombre" class="input-premium">
+                    </div>
+                    
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Correo Electrónico</label>
+                        <input type="email" id="auth-email" placeholder="ejemplo@lana-seda.com" class="input-premium" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Contraseña</label>
+                        <input type="password" id="auth-pass" placeholder="••••••••" class="input-premium" required>
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" id="auth-submit-btn" class="btn-premium text-xs tracking-widest uppercase py-4">Iniciar Sesión</button>
+                    </div>
+                </form>
+
+                <div class="mt-8 text-center border-t border-gray-200 pt-6">
+                    <p class="text-xs text-gray-500 mb-2" id="auth-switch-text">¿No tienes cuenta aún?</p>
+                    <button onclick="switchAuthMode()" class="text-xs uppercase tracking-[0.2em] font-semibold text-[#B5835A] hover:text-black transition-colors" id="auth-switch-btn">Crear una cuenta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navegación -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-header border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <button class="md:hidden p-2" id="mobile-menu-btn">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+
+            <nav class="hidden md:flex space-x-8 text-xs uppercase tracking-[0.2em] font-light">
+                <div class="group relative">
+                    <a href="#" class="nav-link">Colecciones</a>
+                    <div class="absolute top-full left-0 mt-4 hidden group-hover:block bg-white shadow-xl border p-6 w-48 transition-all">
+                        <ul class="space-y-4">
+                            <li><a href="#" class="hover:text-[#B5835A]">Hilazas Clásicas</a></li>
+                            <li><a href="#" class="hover:text-[#B5835A]">Chenille y Velvet</a></li>
+                            <li><a href="#" class="hover:text-[#B5835A]">Lino Orgánico</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a onclick="toggleModal('about-modal')" class="nav-link">Sobre Nosotros</a>
+            </nav>
+
+            <div id="logo-container" class="cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <svg viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="50%" y="50" text-anchor="middle" font-family="'Playfair Display', serif" font-size="28" fill="#2C2C2C" letter-spacing="4">LANA & SEDA</text>
+                    <path d="M120 70 L180 70" stroke="#B5835A" stroke-width="0.5"/>
+                    <text x="50%" y="85" text-anchor="middle" font-family="'Inter', sans-serif" font-size="8" fill="#B5835A" letter-spacing="6">MERCERÍA DE ALTA COSTURA</text>
+                </svg>
+            </div>
+
+            <div class="flex items-center space-x-6 text-xs uppercase tracking-widest font-light">
+                <a onclick="toggleModal('account-modal')" class="nav-link">Cuenta</a>
+                <a href="#" class="relative">
+                    <span class="sr-only">Carrito</span>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span class="absolute -top-2 -right-2 bg-[#B5835A] text-white text-[8px] rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="relative h-[90vh] flex items-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img id="hero-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL8qm-UzfljYMJ6F9tC5Qlb7zRQDmeeVH92g&s" alt="Detalle de hilaza" class="w-full h-full object-cover">
+                <div class="absolute inset-0 hero-overlay"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto px-6 w-full text-center md:text-left">
+                <div class="max-w-2xl fade-in">
+                    <span class="uppercase tracking-[0.3em] text-xs font-semibold text-[#B5835A] mb-4 block">Tradición y Calidad</span>
+                    <h1 class="text-5xl md:text-7xl mb-8 leading-tight">El arte en <br><span class="italic font-light text-[#B5835A]">tus manos.</span></h1>
+                    <p class="text-lg text-gray-900 mb-10 max-w-lg leading-relaxed font-semibold">
+                        Desde la clásica hilaza La Abuelita hasta la suavidad de Alize Velluto, seleccionamos lo mejor para tu creatividad.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-premium max-w-xs shadow-md">Explorar Catálogo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productos destacados -->
+        <section class="py-24 max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+                <div class="max-w-md">
+                    <h2 class="text-3xl md:text-4xl mb-4">Favoritos de la Temporada</h2>
+                    <p class="text-gray-500 font-light">Los materiales esenciales para dar vida a tus ideas más brillantes.</p>
+                </div>
+                <div class="flex gap-4 items-center">
+                    <a href="#" class="text-xs uppercase tracking-widest border-b border-gray-400 pb-1 hover:text-[#B5835A] hover:border-[#B5835A] transition-colors">Ver Todo el Catálogo</a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12" id="product-grid">
+                <!-- Los productos se inyectarán aquí por JavaScript -->
+            </div>
+        </section>
+
+        <!-- Sección de la Frase -->
+        <section class="py-20 bg-white border-y border-gray-50 overflow-hidden">
+            <div class="max-w-4xl mx-auto px-6 text-center fade-in">
+                <div class="flex justify-center mb-8">
+                    <div class="w-12 h-[1px] bg-[#B5835A] self-center"></div>
+                    <div class="mx-4 text-[#B5835A]">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                    </div>
+                    <div class="w-12 h-[1px] bg-[#B5835A] self-center"></div>
+                </div>
+                <p class="serif text-2xl md:text-4xl italic text-gray-700 leading-relaxed">
+                    "Tejer no es solo crear una prenda; es entrelazar pensamientos, tiempo y belleza en una sola pieza de arte táctil."
+                </p>
+                <p class="mt-8 text-[10px] uppercase tracking-[0.4em] text-[#B5835A] font-semibold">Inspiración Lana & Seda</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#F9F7F2] py-16 border-t border-gray-100 mt-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+             <div class="serif text-2xl mb-4 font-bold tracking-tighter">LANA & SEDA</div>
+             <p class="text-sm text-gray-400 font-light mb-8">Mercería de Alta Costura para artesanos contemporáneos.</p>
+             <div class="text-[10px] text-gray-300 uppercase tracking-widest">
+                © 2024 Lana & Seda Boutique.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            { 
+                id: "la-abuelita",
+                title: "La Abuelita", 
+                category: "Hilaza de Algodón 100%", 
+                price: "4.50€", 
+                fixedImage: "https://i.etsystatic.com/27396369/r/il/f2ca30/4068840222/il_fullxfull.4068840222_pvu4.jpg"
+            },
+            { 
+                id: "alize-velluto",
+                title: "Alize Velluto", 
+                category: "Estambre de Micro-Poliéster", 
+                price: "8.90€", 
+                fixedImage: "https://http2.mlstatic.com/D_NQ_NP_917494-MLM87635466006_072025-O-alize-velluto-paq-4-ovillos-100grs-cu-estambres-erika.webp"
+            },
+            { 
+                id: "ganchillos-tulip",
+                title: "Ganchillos Tulip", 
+                category: "Herramientas de Precisión", 
+                price: "120.00€", 
+                fixedImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz4-TFkMnPsbenMcEGkIORigaqzUGV7DT6Ig&s"
+            }
+        ];
+
+        let isLoginMode = true;
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                // Reset a modo login al cerrar para la próxima vez
+                if (modalId === 'account-modal') {
+                    isLoginMode = false;
+                    switchAuthMode();
+                }
+            } else {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function switchAuthMode() {
+            isLoginMode = !isLoginMode;
+            const title = document.getElementById('auth-title');
+            const subtitle = document.getElementById('auth-subtitle');
+            const submitBtn = document.getElementById('auth-submit-btn');
+            const switchText = document.getElementById('auth-switch-text');
+            const switchBtn = document.getElementById('auth-switch-btn');
+            const nameField = document.getElementById('reg-name-container');
+
+            if (isLoginMode) {
+                title.innerText = "Mi Cuenta";
+                subtitle.innerText = "Ingresa a tu espacio creativo";
+                submitBtn.innerText = "Iniciar Sesión";
+                switchText.innerText = "¿No tienes cuenta aún?";
+                switchBtn.innerText = "Crear una cuenta";
+                nameField.style.display = 'none';
+                document.getElementById('reg-name').required = false;
+            } else {
+                title.innerText = "Crear Cuenta";
+                subtitle.innerText = "Únete a nuestra comunidad de artesanos";
+                submitBtn.innerText = "Registrarse";
+                switchText.innerText = "¿Ya tienes una cuenta?";
+                switchBtn.innerText = "Inicia sesión aquí";
+                nameField.style.display = 'block';
+                document.getElementById('reg-name').required = true;
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            // Aquí iría la lógica de autenticación real
+            alert(isLoginMode ? `Iniciando sesión con: ${email}` : `Registrando cuenta para: ${email}`);
+            toggleModal('account-modal');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                const modalId = event.target.id;
+                toggleModal(modalId);
+            }
+        }
+
+        function loadContent() {
+            const grid = document.getElementById('product-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            
+            products.forEach((p) => {
+                grid.innerHTML += `
+                    <div class="product-card group cursor-pointer fade-in opacity-100 transform-none">
+                        <div class="overflow-hidden mb-6 aspect-[3/4] bg-gray-100 flex items-center justify-center">
+                            <img src="${p.fixedImage}" alt="${p.title}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-[10px] uppercase tracking-widest text-gray-400 mb-1 block">${p.category}</span>
+                                <h3 class="text-xl mb-1">${p.title}</h3>
+                            </div>
+                            <span class="text-sm font-light text-[#B5835A]">${p.price}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = loadContent;
+    </script>
+
+    <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/03/26/00/20260326000209-MZDMHUOB.js" defer></script>
+    
+</body>
+</html>
